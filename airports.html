@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Airports In Turkey</title>
+    
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    
+	<script src="http://api-maps.yandex.ru/2.0/?load=package.full&lang=en-US" type="text/javascript"></script>
+	
+    <script type="text/javascript">
+        ymaps.ready(init);
+
+		/* 
+			Type:
+				INT: International Airports,
+				MIL: Military Airports,
+				LOC: Local Airports,
+				OLD: Old Airports
+				PRO: Airports Under Construction
+		
+		*/
+		
+		var airports = [
+			{type: "INT", location: "Adana", ICAO: "LTAF", IATA: "ADA", name: "Adana Şakirpaşa Havalimanı", coordinate: "36.9819444444444, 35.2802777777778"},
+			{type: "INT", location: "Ankara", ICAO: "LTAC", IATA: "ESB", name: "Esenboğa Havalimanı", coordinate: "40.1280555555556, 32.995"},
+			{type: "INT", location: "Antakya", ICAO: "LTAK", IATA: "HTY", name: "Hatay Havalimanı", coordinate: "36.3627777777778, 36.2822222222222"},
+			{type: "INT", location: "Antalya", ICAO: "LTAI", IATA: "AYT", name: "Antalya Havalimanı", coordinate: "36.9002777777778, 30.7927777777778"},
+			{type: "INT", location: "Bodrum", ICAO: "LTFE", IATA: "BJV", name: "Milas-Bodrum Havalimanı", coordinate: "37.2505555555556, 27.6641666666667"},
+			{type: "INT", location: "Bursa", ICAO: "LTBR", IATA: "YEI", name: "Bursa Yenişehir Havalimanı", coordinate: "40.255, 29.5625"},
+			{type: "INT", location: "Dalaman", ICAO: "LTBS", IATA: "DLM", name: "Dalaman Havalimanı", coordinate: "36.7147222222222, 28.7927777777778"},
+			{type: "INT", location: "Erzurum", ICAO: "LTCE", IATA: "ERZ", name: "Erzurum Havalimanı", coordinate: "39.9552777777778, 41.1691666666667"},
+			{type: "INT", location: "Eskişehir", ICAO: "LTBY", IATA: "AOE", name: "Eskişehir Anadolu Havalimanı", coordinate: "39.81, 30.5194444444444"},
+			{type: "INT", location: "Gaziantep", ICAO: "LTAJ", IATA: "GZT", name: "Gaziantep Havalimanı", coordinate: "36.9477777777778, 37.4788888888889"},
+			{type: "INT", location: "İstanbul", ICAO: "LTBA", IATA: "IST", name: "Atatürk Havalimanı", coordinate: "40.9761111111111, 28.8141666666667"},
+			{type: "INT", location: "İstanbul", ICAO: "LTFJ", IATA: "SAW", name: "Sabiha Gökçen Havalimanı", coordinate: "40.8983333333333, 29.3091666666667"},
+			{type: "INT", location: "İzmir", ICAO: "LTBJ", IATA: "ADB", name: "Adnan Menderes Havalimanı", coordinate: "38.2891666666667, 27.155"},
+			{type: "INT", location: "Kayseri", ICAO: "LTAU", IATA: "ASR", name: "Erkilet Havalimanı", coordinate: "38.7702777777778, 35.4952777777778"},
+			{type: "INT", location: "Konya", ICAO: "LTAN", IATA: "KYA", name: "Konya Havalimanı", coordinate: "37.9788888888889, 32.5616666666667"},
+			{type: "INT", location: "Kütahya", ICAO: "LTBZ", IATA: "KZR", name: "Zafer Havalimanı", coordinate: "39.1113888888889, 30.1297222222222"},
+			{type: "INT", location: "Malatya", ICAO: "LTAT", IATA: "MLX", name: "Malatya Erhaç Havalimanı", coordinate: "38.4352777777778, 38.0908333333333"},
+			{type: "INT", location: "Nevşehir", ICAO: "LTAZ", IATA: "NAV", name: "Nevşehir Kapadokya Havalimanı", coordinate: "38.7688888888889, 34.5263888888889"},
+			{type: "INT", location: "Samsun", ICAO: "LTFH", IATA: "SZF", name: "Çarşamba Havalimanı", coordinate: "41.2655555555556, 36.5486111111111"},
+			{type: "INT", location: "Şanlıurfa", ICAO: "LTCS", IATA: "GNY", name: "Şanlıurfa GAP Havalimanı", coordinate: "37.45, 38.9"},
+			{type: "INT", location: "Trabzon", ICAO: "LTCG", IATA: "TZX", name: "Trabzon Havalimanı", coordinate: "40.9951, 39.7897"},
+			{type: "LOC", location: "Adıyaman", ICAO: "LTCP", IATA: "ADF", name: "Adıyaman Havalimanı", coordinate: "37.7316666666667, 38.4688888888889"},
+			{type: "LOC", location: "Ağrı", ICAO: "LTCO", IATA: "AJI", name: "Ağrı Havalimanı", coordinate: "39.6544444444444, 43.0272222222222"},
+			{type: "LOC", location: "Amasya", ICAO: "LTAP", IATA: "MZH", name: "Amasya Merzifon Havalimanı", coordinate: "40.8291666666667, 35.5219444444444"},
+			{type: "LOC", location: "Antalya", ICAO: "LTGP", IATA: "GZP", name: "Alanya Gazipaşa Havalimanı", coordinate: "36.2993, 32.3014"},
+			{type: "LOC", location: "Balıkesir", ICAO: "LTBF", IATA: "BZI", name: "Balıkesir Havalimanı", coordinate: "39.6191666666667, 27.9258333333333"},
+			{type: "LOC", location: "Balıkesir", ICAO: "LTFD", IATA: "EDO", name: "Balıkesir Koca Seyit Havalimanı", coordinate: "39.5544444444444, 27.0136111111111"},
+			{type: "LOC", location: "Batman", ICAO: "LTCJ", IATA: "BAL", name: "Batman Havalimanı", coordinate: "37.9322222222222, 41.1163888888889"},
+			{type: "LOC", location: "Bingöl", ICAO: "LTCU", IATA: "BGG", name: "Bingöl Havalimanı", coordinate: "38.86, 40.5938888888889"},
+			{type: "LOC", location: "Çanakkale", ICAO: "LTBH", IATA: "CKZ", name: "Çanakkale Havalimanı", coordinate: "40.1375, 26.4266666666667"},
+			{type: "LOC", location: "Denizli", ICAO: "LTAY", IATA: "DNZ", name: "Denizli Çardak Havalimanı", coordinate: "37.7855555555556, 29.7011111111111"},
+			{type: "LOC", location: "Diyarbakır", ICAO: "LTCC", IATA: "DIY", name: "Diyarbakır Havalimanı", coordinate: "37.8938888888889, 40.2008333333333"},
+			{type: "LOC", location: "Elazığ", ICAO: "LTCA", IATA: "EZS", name: "Elazığ Havalimanı", coordinate: "38.6066666666667, 39.2913888888889"},
+			{type: "LOC", location: "Erzincan", ICAO: "LTCD", IATA: "ERC", name: "Erzincan Havalimanı", coordinate: "39.71, 39.5269444444444"},
+			{type: "LOC", location: "Iğdır", ICAO: "LTCT", IATA: "IGD", name: "Iğdır Havalimanı", coordinate: "39.9830555555556, 43.8663888888889"},
+			{type: "LOC", location: "Isparta", ICAO: "LTFC", IATA: "ISE", name: "Isparta Süleyman Demirel Havalimanı", coordinate: "37.865, 30.3819444444444"},
+			{type: "LOC", location: "İstanbul", ICAO: "LTBW", IATA: "-", name: "İstanbul Hezarfen Havalimanı", coordinate: "41.1044444444444, 28.55"},
+			{type: "LOC", location: "Kahramanmaraş", ICAO: "LTCN", IATA: "KCM", name: "Kahramanmaraş Havalimanı", coordinate: "37.5388888888889, 36.9533333333333"},
+			{type: "LOC", location: "Kars", ICAO: "LTCF", IATA: "KSY", name: "Kars Havalimanı", coordinate: "40.5622222222222, 43.115"},
+			{type: "LOC", location: "Kastamonu", ICAO: "LTAL", IATA: "KFS", name: "Kastamonu Havalimanı", coordinate: "41.3138, 33.7949"},
+			{type: "LOC", location: "Kocaeli", ICAO: "LTBQ", IATA: "KCO", name: "Kocaeli Cengiz Topel Havalimanı", coordinate: "40.735, 30.0833333333333"},
+			{type: "LOC", location: "Mardin", ICAO: "LTCR", IATA: "MQM", name: "Mardin Havalimanı", coordinate: "37.2327777777778, 40.6405555555556"},
+			{type: "LOC", location: "Muş", ICAO: "LTCK", IATA: "MSR", name: "Muş Havalimanı", coordinate: "38.7447222222222, 41.6538888888889"},
+			{type: "LOC", location: "Siirt", ICAO: "LTCL", IATA: "SXZ", name: "Siirt Havalimanı", coordinate: "37.9666666666667, 41.8333333333333"},
+			{type: "LOC", location: "Sinop", ICAO: "LTCM", IATA: "NOP", name: "Sinop Havalimanı", coordinate: "42.0158333333333, 35.0663888888889"},
+			{type: "LOC", location: "Sivas", ICAO: "LTAR", IATA: "VAS", name: "Sivas Havalimanı", coordinate: "39.7666666666667, 37.0166666666667"},
+			{type: "LOC", location: "Şırnak", ICAO: "LTCV", IATA: "NKT", name: "Şırnak Havalimanı", coordinate: "37.3633333333333, 42.0597222222222"},
+			{type: "LOC", location: "Tekirdağ", ICAO: "LTBU", IATA: "TEQ", name: "Tekirdağ Çorlu Havalimanı", coordinate: "41.1383333333333, 27.9191666666667"},
+			{type: "LOC", location: "Tokat", ICAO: "LTAW", IATA: "TJK", name: "Tokat Havalimanı", coordinate: "40.3116666666667, 36.3736111111111"},
+			{type: "LOC", location: "Uşak", ICAO: "LTBO", IATA: "USQ", name: "Uşak Havalimanı", coordinate: "38.6796, 29.4816"},
+			{type: "LOC", location: "Van", ICAO: "LTCI", IATA: "VAN", name: "Van Ferit Melen Havalimanı", coordinate: "38.4683333333333, 43.3322222222222"},
+			{type: "LOC", location: "Zonguldak", ICAO: "LTAS", IATA: "ONQ", name: "Zonguldak Havalimanı", coordinate: "41.5064, 32.0886"},
+			{type: "MIL", location: "Ankara", ICAO: "LTAB", IATA: "-", name: "Güvercinlik Hava Üssü", coordinate: "39.9347222222222, 32.7405555555556"},
+			{type: "MIL", location: "Ankara", ICAO: "LTAE", IATA: "-", name: "Akıncı Hava Üssü", coordinate: "40.0788888888889, 32.5655555555556"},
+			{type: "MIL", location: "Ankara", ICAO: "LTAD", IATA: "ANK", name: "Etimesgut Hava Üssü", coordinate: "39.9497222222222, 32.6886111111111"},
+			{type: "MIL", location: "Balıkesir", ICAO: "LTBF", IATA: "BZI", name: "Balıkesir Hava Üssü", coordinate: "39.6191666666667, 27.9258333333333"},
+			{type: "MIL", location: "Bandırma", ICAO: "LTBG", IATA: "BDM", name: "Bandırma Hava Üssü", coordinate: "40.3177777777778, 27.9775"},
+			{type: "MIL", location: "Diyarbakır", ICAO: "LTCC", IATA: "DIY", name: "Diyarbakır Hava Üssü", coordinate: "37.8938888888889, 40.2008333333333"},
+			{type: "MIL", location: "Eskişehir", ICAO: "LTBI", IATA: "ESK", name: "Eskişehir Hava Üssü", coordinate: "39.7838888888889, 30.5819444444444"},
+			{type: "MIL", location: "İncirlik / Adana", ICAO: "LTAG", IATA: "-", name: "İncirlik Hava Üssü", coordinate: "37.0019444444444, 35.4258333333333"},
+			{type: "MIL", location: "İstanbul", ICAO: "LTBX", IATA: "-", name: "Samandıra Hava Üssü", coordinate: "40.9927777777778, 29.2155555555556"},
+			{type: "MIL", location: "İzmir", ICAO: "LTBL", IATA: "IGL", name: "Çiğli Hava Üssü", coordinate: "38.5127777777778, 27.01"},
+			{type: "MIL", location: "İzmir", ICAO: "LTBK", IATA: "-", name: "Gaziemir Hava Üssü", coordinate: "38.3188888888889, 27.1591666666667"},
+			{type: "MIL", location: "Kayseri", ICAO: "LTAU", IATA: "ASR", name: "Erkilet Hava Üssü", coordinate: "38.7702777777778, 35.4952777777778"},
+			{type: "MIL", location: "Kocaeli", ICAO: "LTBQ", IATA: "KCO", name: "Cengiz Topel Donanma Hava İstasyonu", coordinate: "40.735, 30.0833333333333"},
+			{type: "MIL", location: "Konya", ICAO: "LTAN", IATA: "KYA", name: "Konya Hava Üssü", coordinate: "37.9788888888889, 32.5616666666667"},
+			{type: "MIL", location: "Kütahya", ICAO: "LTBN", IATA: "-", name: "Kütahya Hava Üssü", coordinate: "39.4266666666667, 30.0166666666667"},
+			{type: "MIL", location: "Malatya", ICAO: "LTAT", IATA: "MLX", name: "Erhaç Hava Üssü", coordinate: "38.4352777777778, 38.0908333333333"},
+			{type: "MIL", location: "Merzifon", ICAO: "LTAP", IATA: "MZH", name: "Merzifon Hava Üssü", coordinate: "40.8291666666667, 35.5219444444444"},
+			{type: "OLD", location: "Afyon", ICAO: "LTAH", IATA: "AFY", name: "Afyon Havalimanı", coordinate: "38.7263888888889, 30.6011111111111"},
+			//{type: "PRO", location: "İstanbul", ICAO: "", IATA: "", name: "Üçüncü havalimanı", coordinate: ""},
+			{type: "PRO", location: "Mersin", ICAO: "", IATA: "", name: "Çukurova Bölgesel Havalimanı", coordinate: "36.8996, 35.0628"},
+			{type: "PRO", location: "Ordu", ICAO: "", IATA: "", name: "Ordu Giresun Havalimanı", coordinate: "40.9680555555556, 38.0763888888889"},
+			//{type: "PRO", location: "Gümüşhane", ICAO: "", IATA: "", name: "Gümüşhane Havalimanı", coordinate: ""},
+			//{type: "PRO", location: "Hakkari", ICAO: "", IATA: "", name: "Hakkari Yüksekova Havalimanı", coordinate: ""},
+			//{type: "PRO", location: "Yozgat", ICAO: "", IATA: "", name: "Yozgat Havalimanı", coordinate: ""}
+		];
+
+		
+        function init () {
+			var renk = "";
+
+			var myMap = new ymaps.Map("map", {
+				center: [39.9347222222222, 32.7405555555556],
+				zoom: 10
+			});
+			
+			myMap.controls.add('zoomControl').add('typeSelector').add('smallZoomControl', { right: 5, top: 75 }).add('mapTools');
+
+
+			for (airport in airports) {
+				air = airports[airport];
+
+				if (air["type"] == "MIL") {
+					renk = 'twirl#greenStretchyIcon'
+				} else if (air["type"] == "INT") {
+					renk = 'twirl#blueStretchyIcon'
+				} else if (air["type"] == "LOC") {
+					renk = 'twirl#yellowStretchyIcon'
+				} else if (air["type"] == "OLD") {
+					renk = 'twirl#greyStretchyIcon'
+				} else if (air["type"] == "PRO") {
+					renk = 'twirl#blackStretchyIcon'
+				}
+				
+				
+				geo =  new ymaps.GeoObject({
+					geometry: {
+						type: 'Point',
+						coordinates: [parseFloat(air["coordinate"].split(', ')[0]), parseFloat(air["coordinate"].split(', ')[1])]
+					},
+					properties: {
+						iconContent: air["IATA"]
+					}
+				}, {
+					preset: renk
+				});
+				
+				myMap.geoObjects.add(geo);
+			}
+		}
+    </script>
+</head>
+
+<body>
+<div id="map" style="width: 1000px; height:600px"></div>
+</body>
+
+</html>
